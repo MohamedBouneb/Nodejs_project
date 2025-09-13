@@ -13,10 +13,9 @@ export async function getAllnotes (req,res) {
 export async function creatNotes (req,res) {
     try{
         const {title,content} = req.body
-        console.log(title,content)
-        const newnote = new Notes ({title,content});
-        await newnote.save();
-        res.status(201).json({message:"note created successfully",note:newnote});
+        const note = new Notes ({title,content});
+        const savedNote = await note.save();
+        res.status(201).json(savedNote);
     }catch(error){
         console.log("error in create Note ",error);
         res.status(500).json({message:"Server error"});
@@ -24,10 +23,32 @@ export async function creatNotes (req,res) {
     }
 }
 
-export function updateNotes (req,res) {
-    res.status(200).json({message: "update note"})
+export async function updateNotes (req,res) {
+    try{
+        const {title,content} = req.body
+        const updateNotes =await Notes.findByIdAndUpdate(req.params.id,{title,content},{new:true});
+        if(!updateNotes){
+            return res.status(404).json({message : "note not found"});
+        }
+        res.status(200).json(updateNotes);
+    }catch(error){
+        console.log("error in update Note ",error);
+        res.status(500).json({message:"Server error"});
+
+    }
 }
 
-export function deleteNotes (req,res) {
-    res.status(200).json({message: "delelte note"})
+export async function deleteNotes (req,res) {
+    try{
+        const deleteNote = await Notes.findByIdAndDelete(req.params.id);
+        if (!deleteNote)
+        {
+            return res.status(404).json({message : "note not found"});
+        }
+        res.status(200).json({message:"note deleted successfully"});
+    }catch(error){
+        console.log("error in delete Note ",error);
+        res.status(500).json({message:"Server error"});
+
+    }
 }
