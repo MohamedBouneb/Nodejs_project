@@ -1,13 +1,14 @@
-import mongoose, { Types }  from "mongoose";
-const notesSchema = mongosse.Shema({
+import mongoose from "mongoose";
+const notesSchema = new mongoose.Schema({
     title:{
-        Types:String,
+        type:String,
         required:true,
     },
     content:{
-        Types:String,
+        type:String,
         required:true,
-    }},
+    }
+    },
 
     {timestamps:true,}
 );

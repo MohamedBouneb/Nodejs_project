@@ -3,9 +3,9 @@ import { getAllnotes, creatNotes, updateNotes, deleteNotes } from '../controller
 const router = express.Router()
 
 router.get("/getall",getAllnotes);
-router.get("/create",creatNotes);
-router.get("/:id",updateNotes);
-router.get("/:id", deleteNotes);
+router.post("/create",creatNotes);
+router.put("/:id",updateNotes);
+router.delete("/:id", deleteNotes);
 
 
 export default router;

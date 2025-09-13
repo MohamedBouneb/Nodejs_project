@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 dotenv.config();
 console.log(process.env.MONGO_URI);
-
+app.use(express.json());
 connectDB();
 
 app.use("/api/notes",notesRoutes)
